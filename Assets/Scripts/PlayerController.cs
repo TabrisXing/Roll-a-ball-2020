@@ -25,7 +25,12 @@ public class PlayerController : MonoBehaviour
         SetCountText();
         winText.text = "";
 
-        
+        for (int i = 0; i < number_of_Pickups; i++)
+        {
+            float angle = i * Mathf.PI * 2f / number_of_Pickups;
+            Vector3 newPos = new Vector3(Mathf.Cos(angle) * radius, 0.5f, Mathf.Sin(angle) * radius);
+            Instantiate(Pickup, newPos, Quaternion.identity);
+        }
     }
 
     void FixedUpdate()
