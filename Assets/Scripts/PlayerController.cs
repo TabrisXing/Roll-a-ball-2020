@@ -7,8 +7,12 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    public float jumpheight;
     public Text countText;
     public Text winText;
+    public GameObject Pickup;
+    public int number_of_Pickups;
+    public float radius;
 
     private Rigidbody rb;
     private int count;
@@ -20,6 +24,8 @@ public class PlayerController : MonoBehaviour
         count = 0;
         SetCountText();
         winText.text = "";
+
+        
     }
 
     void FixedUpdate()
@@ -30,6 +36,12 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
         rb.AddForce(movement * speed);
+
+        if (Input.GetKeyDown("space"))
+        {
+            Vector3 up = new Vector3(0.0f, jumpheight, 0.0f);
+            rb.AddForce(up);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -45,7 +57,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 12)
+        if (count >= number_of_Pickups)
         {
             winText.text = "You Win!";
         }
