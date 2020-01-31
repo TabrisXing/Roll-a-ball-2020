@@ -7,6 +7,7 @@ TagManager:
   - Undefined
   - Pick up
   - 5pts Pick up
+  - Ground
   layers:
   - Default
   - TransparentFX
