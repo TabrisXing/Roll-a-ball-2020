@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private int count;
+    private bool groundContact;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         count = 0;
         SetCountText();
         winText.text = "";
+        groundContact = false;
 
         for (int i = 0; i < number_of_Pickups; i++)
         {
@@ -37,15 +39,16 @@ public class PlayerController : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+        Vector3 up = new Vector3(0.0f, jumpheight, 0.0f);
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
         rb.AddForce(movement * speed);
 
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && groundContact)
         {
-            Vector3 up = new Vector3(0.0f, jumpheight, 0.0f);
             rb.AddForce(up);
+            groundContact = false;
         }
     }
 
@@ -64,8 +67,12 @@ public class PlayerController : MonoBehaviour
             count = count + 5;
             SetCountText();
         }
-    }
 
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            groundContact = true;
+        }
+    }
 
 void SetCountText()
     {
